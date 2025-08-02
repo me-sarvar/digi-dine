@@ -1,17 +1,17 @@
-
 # ⚙️ DigiDine - Setup Instructions
 
-This guide explains how to set up both the **backend** (FastAPI) and **frontend** (Flutter Web) for the DigiDine project.
+This guide explains how to set up both the **backend** (NestJS) and **frontend** (Flutter Web) for the DigiDine project.
 
 ---
 
-## 🛠️ Backend Setup (FastAPI)
+## 🛠️ Backend Setup (NestJS)
 
 ### 1. Prerequisites
 
-- Python 3.12.5  
-- `pipenv` installed  
+- Node.js (v18 or above)  
+- npm or yarn  
 - PostgreSQL running locally or remotely  
+- Docker (optional, for containerization)  
 
 ---
 
@@ -19,7 +19,7 @@ This guide explains how to set up both the **backend** (FastAPI) and **frontend*
 
 ```bash
 cd backend
-pipenv install
+npm install         # or yarn install
 ```
 
 ---
@@ -29,18 +29,26 @@ pipenv install
 Create a `.env` file inside the `backend` folder:
 
 ```ini
-DATABASE_URL=postgresql+psycopg2://user:password@localhost/digidine_db
-SECRET_KEY=your_secret_key
-ACCESS_TOKEN_EXPIRE_MINUTES=30
+DATABASE_URL=postgresql://user:password@localhost:5432/digidine_db
+JWT_SECRET=your_jwt_secret
+JWT_EXPIRES_IN=3600s
 ```
 
 ---
 
 ### 4. Database Setup
 
+If using **TypeORM**:
+
 ```bash
-pipenv shell
-alembic upgrade head
+npm run typeorm migration:run
+```
+
+If using **Prisma**:
+
+```bash
+npx prisma generate
+npx prisma migrate dev
 ```
 
 ---
@@ -48,12 +56,10 @@ alembic upgrade head
 ### 5. Run Backend Server
 
 ```bash
-pipenv shell
-uvicorn app.main:app --reload
+npm run start:dev
 ```
 
-API available at: [http://127.0.0.1:8000](http://127.0.0.1:8000)  
-Docs at: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)  
+API available at: [http://localhost:3000](http://localhost:3000)
 
 ---
 
@@ -99,7 +105,7 @@ Generated files will be located in `frontend/build/web`. Deploy these to your we
 
 - Ensure the backend API URL is correctly set in frontend `lib/config.dart` or equivalent  
 - For production, both backend and frontend should run on secure (HTTPS) infrastructure  
-- Database, secret keys, and environment-specific configs should never be committed to Git  
+- Database credentials, secret keys, and other sensitive environment variables should **not** be committed to version control  
 
 ---
 
@@ -107,6 +113,3 @@ Generated files will be located in `frontend/build/web`. Deploy these to your we
 
 This project is proprietary and strictly for use by the DigiDine project team only.  
 See the [LICENSE.md](LICENSE.md) file for full terms and restrictions.
-
-
----
