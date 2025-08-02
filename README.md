@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="media/icons/logos/DigiDine-Solo.svg" width="100" height="100" alt="App logo" />
+  <img src="shared/assets/vectors/DigiDine-Solo.svg" width="100" height="100" alt="App logo" />
 </p>
 
 <h1 align="center">🍽️ DigiDine - Smart Meal Ordering System</h1>
