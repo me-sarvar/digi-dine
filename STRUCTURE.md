@@ -15,71 +15,79 @@ digidine/
 
 ```graphql
 backend/
-├── app/
-│   ├── main.py                  # FastAPI app entry point
-│   ├── api/                     # API route groupings
-│   │   ├── v1/                  # Versioned API for long-term stability
-│   │   │   ├── routes_guest.py
-│   │   │   ├── routes_admin.py
-│   │   │   ├── routes_kitchen.py
-│   │   │   ├── routes_auth.py
-│   │   │   ├── routes_restaurant.py
-│   │   │   └── __init__.py
-│   │   └── __init__.py
-│   │
-│   ├── core/                    # Core configurations
-│   │   ├── config.py
-│   │   ├── security.py          # JWT, password hashing, token logic
-│   │   └── utils.py
-│   │
-│   ├── db/                      # Database models & session setup
-│   │   ├── session.py
-│   │   ├── base.py              # Base model
-│   │   ├── models/              # SQLAlchemy models
-│   │   │   ├── user.py
-│   │   │   ├── restaurant.py
-│   │   │   ├── table.py
-│   │   │   ├── menu.py
-│   │   │   ├── order.py
-│   │   │   ├── utensil.py
-│   │   │   └── session_token.py
-│   │   └── schemas/             # Pydantic request/response models
-│   │       ├── user.py
-│   │       ├── restaurant.py
-│   │       ├── table.py
-│   │       ├── menu.py
-│   │       ├── order.py
-│   │       └── utensil.py
-│   │
-│   ├── services/                # Business logic, QR generation, PIN rotation
-│   │   ├── auth_service.py
-│   │   ├── order_service.py
-│   │   ├── restaurant_service.py
-│   │   ├── qr_service.py
-│   │   ├── websocket_manager.py
-│   │   └── session_token_service.py
-│   │
-│   ├── websocket/               # WebSocket event handlers
-│   │   ├── guest_ws.py
-│   │   ├── kitchen_ws.py
-│   │   ├── admin_ws.py
-│   │   └── __init__.py
-│   │
-│   └── middleware/              # Custom middlewares (CORS, auth guards)
-│       └── auth_middleware.py
+├── src/
+│   ├── main.ts                        # NestJS app entry point
+│   ├── app.module.ts                 # Root module
 │
-├── tests/                       # Unit & integration tests
-│   ├── api/
-│   ├── services/
-│   ├── db/
-│   └── conftest.py
+│   ├── auth/                         # Auth module (JWT, guards, roles)
+│   │   ├── auth.module.ts
+│   │   ├── auth.controller.ts
+│   │   ├── auth.service.ts
+│   │   └── jwt.strategy.ts
 │
-├── alembic/                     # Database migrations
+│   ├── user/                         # User management
+│   │   ├── user.module.ts
+│   │   ├── user.controller.ts
+│   │   ├── user.service.ts
+│   │   └── user.entity.ts
 │
-├── requirements.txt
+│   ├── restaurant/                   # Restaurant logic
+│   │   ├── restaurant.module.ts
+│   │   ├── restaurant.controller.ts
+│   │   ├── restaurant.service.ts
+│   │   └── restaurant.entity.ts
+│
+│   ├── table/                        # Table sessions & management
+│   │   ├── table.module.ts
+│   │   ├── table.controller.ts
+│   │   ├── table.service.ts
+│   │   └── table.entity.ts
+│
+│   ├── menu/                         # Menu items
+│   │   ├── menu.module.ts
+│   │   ├── menu.controller.ts
+│   │   ├── menu.service.ts
+│   │   └── menu.entity.ts
+│
+│   ├── order/                        # Order handling
+│   │   ├── order.module.ts
+│   │   ├── order.controller.ts
+│   │   ├── order.service.ts
+│   │   └── order.entity.ts
+│
+│   ├── utensil/                      # Utensil tracking
+│   │   ├── utensil.module.ts
+│   │   ├── utensil.controller.ts
+│   │   ├── utensil.service.ts
+│   │   └── utensil.entity.ts
+│
+│   ├── qr/                           # QR & PIN generation
+│   │   ├── qr.module.ts
+│   │   ├── qr.service.ts
+│   │   └── pin-rotation.service.ts
+│
+│   ├── websocket/                    # Gateway for real-time updates
+│   │   ├── events.gateway.ts
+│   │   ├── guest.gateway.ts
+│   │   ├── kitchen.gateway.ts
+│   │   └── admin.gateway.ts
+│
+│   ├── common/                       # DTOs, interfaces, constants, guards
+│   │   ├── decorators/
+│   │   ├── guards/
+│   │   ├── interceptors/
+│   │   └── dtos/
+│
+├── test/                             # Unit & integration tests
+│
+├── prisma/                           # If using Prisma instead of TypeORM
+│   └── schema.prisma
+│
+├── ormconfig.ts or .env             # DB config (for TypeORM or Prisma)
 ├── Dockerfile
 ├── docker-compose.yml
 └── README.md
+
 ```
 
 ## Folder structure of Frontend
